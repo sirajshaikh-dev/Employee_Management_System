@@ -5,6 +5,7 @@
 body {
   @apply bg-white text-white dark:bg-[#111];
 }
-#tasklist::-webkit-scrollbar{
+#tasklist::-webkit-scrollbar,
+#alltask::-webkit-scrollbar{
   display: none;
 }
