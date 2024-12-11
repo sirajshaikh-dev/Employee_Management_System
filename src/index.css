@@ -3,5 +3,8 @@
 @tailwind utilities;
 
 body {
-  @apply bg-[#111];
+  @apply bg-white text-white dark:bg-[#111];
+}
+#tasklist::-webkit-scrollbar{
+  display: none;
 }

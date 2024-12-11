@@ -4,7 +4,15 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],  theme: {
-    extend: {},
+    extend: {
+      scrollbar: {
+        hide: {
+          '::-webkit-scrollbar': { display: 'none' },
+          '-ms-overflow-style': 'none', // For Internet Explorer
+          'scrollbar-width': 'none',   // For Firefox
+        },
+      },
+    },
   },
   plugins: [],
 }
