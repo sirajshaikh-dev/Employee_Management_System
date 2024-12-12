@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import  { useState } from 'react'
 
 function Login() {
     const [email, setEmail] = useState('')
@@ -13,7 +13,7 @@ function Login() {
      }
 
   return (
-    <div className='flex h-screen w-screen items-center justify-center '>
+    <div className='flex h-screen w-full items-center justify-center '>
         <div className='border-2 border-emerald-600 p-20 rounded-xl'>
             <form onSubmit={submitHandler}
             className='flex flex-col items-center justify-center'>

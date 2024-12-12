@@ -5,14 +5,13 @@ import EmployeeDashboard from './Components/Dashboard/EmployeeDashboard'
 import AdminDashboard from './Components/Dashboard/AdminDashboard'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
       <div>
           {/* <Login/> */}
           <EmployeeDashboard/>
-          <AdminDashboard/>
+          {/* <AdminDashboard/> */}
       </div>    
   </>
   )
