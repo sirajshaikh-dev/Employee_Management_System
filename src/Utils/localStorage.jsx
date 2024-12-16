@@ -1,8 +1,9 @@
+// localStorage.clear()
 
 const employees = [
   {
     "id": 1,
-    "firstName": "Hitesh",
+    "firstName": "Siraj",
     "email": "employee1@example.com",
     "password": "123",
     "tasks": [
@@ -52,7 +53,7 @@ const employees = [
   },
   {
     "id": 2,
-    "firstName": "Siraj",
+    "firstName": "Hitesh",
     "email": "employee2@example.com",
     "password": "123",
     "tasks": [
@@ -248,9 +249,8 @@ const employees = [
 
   console.log(employees)
   employees.forEach((employee)=>{
-    console.log(`TaskCount:`,employee.taskCounts)
+    // console.log(`TaskCount:`,employee.taskCounts)
   })
-
   export const setLocalStorage= ()=>{
     localStorage.setItem('employees',JSON.stringify(employees))
     localStorage.setItem('admin',JSON.stringify(admin))

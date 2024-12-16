@@ -9,27 +9,36 @@ import { AuthContext } from './Context/AuthProvider'
 function App() {
 
   const [user, setUser] = useState(null)
+  const [loggedInUserData, setLoggedInUserData] = useState(null)
   const authData= useContext(AuthContext)
   // console.log(authData)
 
-  useEffect(()=>{
-    if (authData) {
-      const loggedInUser= localStorage.getItem('loggedInUser') 
-        if (loggedInUser) {
-         setUser(loggedInUser.role) 
-        }
-    }
-  },[authData])
+  // useEffect(()=>{
+  //   if (authData) {
+  //     const loggedInUser= localStorage.getItem('loggedInUser') 
+  //       if (loggedInUser) {
+  //        setUser(loggedInUser.role) 
+  //       }
+  //   }
+  // },[authData])
 
   const handleLogin=(email,password)=>{
+    console.log(authData);
+console.log(authData?.employees);
+
     if (email=='admin@me.com' && password == '123') {
       setUser('admin')
       // console.log(user)
       localStorage.setItem("loggedInUser",JSON.stringify({role: 'admin'}))
-    } else if(authData && authData.employees.find((e)=>email == e.email && e.password== password)){
-      setUser('employee')
-      // console.log(user)
-      localStorage.setItem("loggedInUser",JSON.stringify({role: 'employee'}))
+    } else if(authData){
+      const employee = authData.employees.find((e)=>email == e.email && e.password== password)
+      console.log(employee)
+      if(employee){
+        setUser('employee')
+        setLoggedInUserData(employee)
+        localStorage.setItem("loggedInUser",JSON.stringify({role: 'employee'}))
+      }
+    // console.log(user)
     }
     else{
       alert('invalid credential')
@@ -48,7 +57,14 @@ function App() {
     <>
       <div>
           { !user ? <Login handleLogin={handleLogin}/> : " "}
-          { user == 'admin' ? <AdminDashboard/> : <EmployeeDashboard/>}
+          { user == 'admin' 
+            ? <AdminDashboard/> 
+            : (user == 'employee'
+              ? <EmployeeDashboard loggedInUserData={loggedInUserData}/> 
+              : ''
+            )
+
+          }
       </div>    
   </>
   )
