@@ -5,6 +5,7 @@ import EmployeeDashboard from './Components/Dashboard/EmployeeDashboard'
 import AdminDashboard from './Components/Dashboard/AdminDashboard'
 import { getLocalStorage, setLocalStorage } from './Utils/localStorage'
 import { AuthContext } from './Context/AuthProvider'
+import { data } from 'autoprefixer'
 
 function App() {
 
@@ -14,17 +15,19 @@ function App() {
   // console.log(authData)
 
   // useEffect(()=>{
-  //   if (authData) {
-  //     const loggedInUser= localStorage.getItem('loggedInUser') 
-  //       if (loggedInUser) {
-  //        setUser(loggedInUser.role) 
-  //       }
+  //   const loggedInUser= localStorage.getItem('loggedInUser') 
+  //   console.log(loggedInUser)
+  //   if (loggedInUser) {
+  //     const userData= JSON.parse(loggedInUser)
+  //       console.log('userdata:',userData)
+  //     setUser(userData.role)
+  //     setLoggedInUserData(userData.data)
   //   }
-  // },[authData])
+  // },[])
 
   const handleLogin=(email,password)=>{
-    console.log(authData);
-console.log(authData?.employees);
+    console.log('authdata',authData);
+    // console.log('authdata.employees',authData?.employees);
 
     if (email=='admin@me.com' && password == '123') {
       setUser('admin')
@@ -32,18 +35,18 @@ console.log(authData?.employees);
       localStorage.setItem("loggedInUser",JSON.stringify({role: 'admin'}))
     } else if(authData){
       const employee = authData.employees.find((e)=>email == e.email && e.password== password)
-      console.log(employee)
+      // console.log(employee)
       if(employee){
         setUser('employee')
         setLoggedInUserData(employee)
-        localStorage.setItem("loggedInUser",JSON.stringify({role: 'employee'}))
+        localStorage.setItem("loggedInUser",JSON.stringify({role: 'employee', data:employee}))
       }
     // console.log(user)
     }
     else{
       alert('invalid credential')
     }
-    console.log(email,password)
+    console.log('email:',email, 'password:',password)
   }
   // handleLogin('user@me.com',123)
 
