@@ -5,7 +5,6 @@ import EmployeeDashboard from './Components/Dashboard/EmployeeDashboard'
 import AdminDashboard from './Components/Dashboard/AdminDashboard'
 import { getLocalStorage, setLocalStorage } from './Utils/localStorage'
 import { AuthContext } from './Context/AuthProvider'
-import { data } from 'autoprefixer'
 
 function App() {
 
@@ -16,10 +15,9 @@ function App() {
 
   // useEffect(()=>{
   //   const loggedInUser= localStorage.getItem('loggedInUser') 
-  //   console.log(loggedInUser)
   //   if (loggedInUser) {
   //     const userData= JSON.parse(loggedInUser)
-  //       console.log('userdata:',userData)
+  //     console.log('userdata:',userData)
   //     setUser(userData.role)
   //     setLoggedInUserData(userData.data)
   //   }

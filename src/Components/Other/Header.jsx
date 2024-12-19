@@ -1,9 +1,9 @@
+import Login from "../Auth/Login"
 
 const Header = () => {
 
   const logOut= ()=>{
     localStorage.setItem('loggedInUser','')
-    window.location.reload()
   }
 
   return (
