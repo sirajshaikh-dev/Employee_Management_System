@@ -1,8 +1,9 @@
 
-const Header = () => {
+const Header = ({changeUser}) => {
   const logOut= ()=>{
     localStorage.setItem('loggedInUser','')
-    window.location.reload()
+    // window.location.reload()  //In efficient way as it reload the page
+    changeUser('')
   }
 
   return (

@@ -13,15 +13,15 @@ function App() {
   const authData= useContext(AuthContext)
   // console.log(authData)
 
-  // useEffect(()=>{
-  //   const loggedInUser= localStorage.getItem('loggedInUser') 
-  //   if (loggedInUser) {
-  //     const userData= JSON.parse(loggedInUser)
-  //     console.log('userdata:',userData)
-  //     setUser(userData.role)
-  //     setLoggedInUserData(userData.data)
-  //   }
-  // },[])
+  useEffect(()=>{
+    const loggedInUser= localStorage.getItem('loggedInUser') 
+    if (loggedInUser) {
+      const userData= JSON.parse(loggedInUser)
+      console.log('userdata:',userData)
+      setUser(userData.role)
+      setLoggedInUserData(userData.data)
+    }
+  },[])
 
   const handleLogin=(email,password)=>{
     console.log('authdata',authData);
@@ -59,9 +59,12 @@ function App() {
       <div>
           { !user ? <Login handleLogin={handleLogin}/> : " "}
           { user == 'admin' 
-            ? <AdminDashboard/> 
+            ? <AdminDashboard changeUser={setUser}/> 
             : (user == 'employee'
-              ? <EmployeeDashboard loggedInUserData={loggedInUserData}/> 
+              ? <EmployeeDashboard 
+                loggedInUserData={loggedInUserData}
+                changeUser={setUser}
+              /> 
               : ''
             )
 
