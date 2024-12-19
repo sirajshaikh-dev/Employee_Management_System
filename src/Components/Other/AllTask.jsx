@@ -2,33 +2,45 @@ import { useContext } from "react"
 import { AuthContext } from "../../Context/AuthProvider"
 
 const AllTask = () => {
-
-    const authData = useContext(AuthContext)
-    console.log('authData',authData)
+  const authData = useContext(AuthContext);
+  console.log("authData", authData);
 
   return (
-    <div id='alltask' className='bg-[#1c1c1c] p-5 mt-5'>
-        <div className='bg-red-400 mb-2 py-2 px-4 flex justify-between rounded'>
-            <h2 className="text-lg font-medium w-1/5">Name</h2>
-            <h3 className="text-lg font-medium w-1/5">New Task</h3>
-            <h5 className="text-lg font-medium w-1/5">Active Task</h5>
-            <h5 className="text-lg font-medium w-1/5">Completed</h5>
-            <h5 className="text-lg font-medium w-1/5">Failed</h5>
-        </div>
-        <div className="">
-            {authData.employees.map((element)=>(
-                <div key={element.id} 
-                className="border-2 border-emerald-500 mb-2 py-2 px-4 flex justify-between">
-                    <h2 className="text-lg font-medium w-1/5 text-blue-100">{element.firstName}</h2>
-                    <h3 className="text-lg font-medium w-1/5 text-blue-400">{element.taskCounts.newTask}</h3>
-                    <h5 className="text-lg font-medium w-1/5 text-yellow-400">{element.taskCounts.active}</h5>
-                    <h5 className="text-lg font-medium w-1/5 text-green-400">{element.taskCounts.completed}</h5>
-                    <h5 className="text-lg font-medium w-1/5 text-red-400">{element.taskCounts.failed}</h5>
-                </div>
-            ))}
-        </div>
-    </div>
-  )
-}
+    <div id="alltask" className="bg-gray-900 p-6 mt-6 rounded-lg shadow-lg">
+      <div className="bg-red-500 mb-4 py-3 px-5 flex justify-between items-center rounded-lg text-white font-semibold">
+        <h2 className="w-1/5 text-center">Name</h2>
+        <h3 className="w-1/5 text-center">New Task</h3>
+        <h5 className="w-1/5 text-center">Active Task</h5>
+        <h5 className="w-1/5 text-center">Completed</h5>
+        <h5 className="w-1/5 text-center">Failed</h5>
+      </div>
 
-export default AllTask
+      <div className="space-y-3">
+        {authData.employees.map((employee) => (
+          <div
+            key={employee.id}
+            className="flex justify-between items-center bg-gray-800 text-white py-3 px-5 rounded-lg border border-gray-700 shadow-sm"
+          >
+            <h2 className="w-1/5 text-center text-blue-300 font-medium">
+              {employee.firstName}
+            </h2>
+            <h3 className="w-1/5 text-center text-blue-400 font-medium">
+              {employee.taskCounts.newTask}
+            </h3>
+            <h5 className="w-1/5 text-center text-yellow-400 font-medium">
+              {employee.taskCounts.active}
+            </h5>
+            <h5 className="w-1/5 text-center text-green-400 font-medium">
+              {employee.taskCounts.completed}
+            </h5>
+            <h5 className="w-1/5 text-center text-red-400 font-medium">
+              {employee.taskCounts.failed}
+            </h5>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default AllTask;
