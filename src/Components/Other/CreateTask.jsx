@@ -7,25 +7,47 @@ const CreateTask = () => {
   const [assignTo, setAssignTo] = useState('')
   const [category, setCategory] = useState('')
 
-  const [createTask, setCreateTask] = useState({})
+  
   const submitHandler=(e)=>{
     e.preventDefault()
     // console.log(taskTitle,taskDate,assignTo,category,taskDescription)
-    
-    setCreateTask({taskTitle,taskDescription,taskDate,category,
-                  newTask:true,active:false,failed:false,completed:false})
-    
+  
+//Basic Validation
+  if (!taskTitle || !taskDate || !assignTo) {
+      alert('Please fill in all required fields')
+      return
+  }
+
+// Constructing the task Object
+    const task ={
+      newTask:true,
+      active:false,
+      failed:false,
+      completed:false,
+      taskTitle,
+      taskDescription,
+      taskDate,
+      category,
+    }
+
+// Get employees data from localStorage
     const data= JSON.parse(localStorage.getItem('employees'))
     // console.log('Data',data)
 
-    data.forEach((element) => {
+// Find the employee by firstName
+    data.forEach((element)=>{
     // console.log('Element',element)
-      if (assignTo == element.firstName) {
-        element.tasks.push(createTask)
-        // console.log('task created',element)
-      }
-    });
 
+      if (assignTo === element.firstName) {
+        element.tasks.push(task)
+      console.log('task created',element)
+      console.log('task',task)
+// Save updated data back to localStorage    
+      localStorage.setItem('employees',JSON.stringify(data))
+      }
+    })
+
+// Reset form fields after submission
     setTaskTitle('')
     setCategory('')
     setAssignTo('')
