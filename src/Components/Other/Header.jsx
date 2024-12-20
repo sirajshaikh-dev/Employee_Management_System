@@ -1,21 +1,43 @@
+import { useContext } from "react";
+import { AuthContext } from "../../Context/AuthProvider";
 
-const Header = ({changeUser}) => {
-  const logOut= ()=>{
-    localStorage.setItem('loggedInUser','')
+const Header = ({changeUser,loggedInUserData, user }) => {
+  const authData = useContext(AuthContext);
+
+  console.log(authData.employees);
+
+  const logOut = () => {
+    localStorage.setItem("loggedInUser", "");
     // window.location.reload()  //In efficient way as it reload the page
-    changeUser('')
-  }
+    changeUser(null);
+  };
 
   return (
-    <div className='flex items-center justify-between'>
-        <h1 className='text-2xl font-medium text-left flex flex-col'>
-            Hello
-            <span className='text-3xl font-semibold'>{'username'} 👋</span>
-        </h1>
-        <button onClick={logOut}
-        className='bg-red-600 text-lg font-medium text-white px-3 py-1 sm:px-5 sm:py-2 rounded-sm'>Logout</button>
+    <div className="flex items-center justify-between p-8">
+      <h1 className="text-2xl font-medium text-left flex flex-col">
+        Hello
+        {user === "admin" ? (
+          <span className="text-3xl font-semibold">
+            Admin 👋
+          </span>
+        ) : user === "employee" ? (
+          <span className="3xl font-semibold">
+            {loggedInUserData?.firstName || 'Guest'} 👋
+          </span>
+        ) : (
+          <span className="sm:text-2xl lg:text-3xl font-semibold">
+            Guest 👋
+          </span>
+        )}
+      </h1>
+      <button
+        onClick={logOut}
+        className="bg-red-600 text-lg font-medium text-white px-3 py-1 rounded-sm"
+      >
+        Logout
+      </button>
     </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

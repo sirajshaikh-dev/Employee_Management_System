@@ -5,6 +5,7 @@ import EmployeeDashboard from './Components/Dashboard/EmployeeDashboard'
 import AdminDashboard from './Components/Dashboard/AdminDashboard'
 import { getLocalStorage, setLocalStorage } from './Utils/localStorage'
 import { AuthContext } from './Context/AuthProvider'
+import Header from './Components/Other/Header'
 
 function App() {
 
@@ -57,16 +58,23 @@ function App() {
   return (
     <>
       <div>
-          { !user ? <Login handleLogin={handleLogin}/> : " "}
-          { user == 'admin' 
-            ? <AdminDashboard changeUser={setUser}/> 
-            : (user == 'employee'
-              ? <EmployeeDashboard 
-                loggedInUserData={loggedInUserData}
-                changeUser={setUser}
-              /> 
-              : ''
-            )
+      {
+        user && 
+          <Header 
+            user={user} 
+            changeUser={setUser} 
+            loggedInUserData={loggedInUserData} 
+          />
+      }
+
+        {!user 
+          ? <Login handleLogin={handleLogin}/> 
+          : user == 'admin' 
+            ? <AdminDashboard /> 
+            : user == 'employee'
+              ? <EmployeeDashboard loggedInUserData={loggedInUserData} />
+              : (null)
+            
 
           }
       </div>    
