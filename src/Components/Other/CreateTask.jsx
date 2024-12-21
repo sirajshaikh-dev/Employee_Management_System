@@ -1,59 +1,69 @@
-import { useState } from "react"
+import {  useState } from "react"
 
 const CreateTask = () => {
-  const [taskTitle, setTaskTitle] = useState('')
-  const [taskDescription, setTaskDescription] = useState('')
-  const [taskDate, setTaskDate] = useState('')
-  const [assignTo, setAssignTo] = useState('')
-  const [category, setCategory] = useState('')
+  const [task, setTask] = useState({
+    active: false,
+    newTask: true,
+    completed: false,
+    failed: false,
+    taskTitle: '',
+    taskDescription: '',
+    taskDate: '',
+    category: '',
+    assignTo: ''
+  });
 
-  
-  const submitHandler=(e)=>{
-    e.preventDefault()
-    // console.log(taskTitle,taskDate,assignTo,category,taskDescription)
-  
-//Basic Validation
-  if (!taskTitle || !taskDate || !assignTo) {
-      alert('Please fill in all required fields')
-      return
-  }
+  const submitHandler = (e) => {
+    e.preventDefault();
+    console.log('submitted Tasks', task.taskTitle, task.taskDate, task.assignTo, task.category, task.taskDescription);
 
-// Constructing the task Object
-    const task ={
-      newTask:true,
-      active:false,
-      failed:false,
-      completed:false,
-      taskTitle,
-      taskDescription,
-      taskDate,
-      category,
+    // Basic Validation
+    if (!task.taskTitle || !task.taskDate || !task.assignTo) {
+      alert('Please fill in all required fields');
+      return;
     }
 
-// Get employees data from localStorage
-    const data= JSON.parse(localStorage.getItem('employees'))
-    // console.log('Data',data)
+    // Constructing the task Object
+    const updatedTask = {
+      ...task,
+      taskTitle: task.taskTitle,
+      taskDescription: task.taskDescription,
+      taskDate: task.taskDate,
+      category: task.category,
+      assignTo: task.assignTo
+    };
 
-// Find the employee by firstName
-    data.forEach((element)=>{
-    // console.log('Element',element)
+    setTask(updatedTask);
 
-      if (assignTo === element.firstName) {
-        element.tasks.push(task)
-      console.log('task created',element)
-      console.log('task',task)
-// Save updated data back to localStorage    
-      localStorage.setItem('employees',JSON.stringify(data))
+    // Retrieve existing employee data from localStorage
+    const employees = JSON.parse(localStorage.getItem('employees')) || [];
+
+    // Assign task to the specified employee
+    const updatedEmployees = employees.map((employee) => {
+      if (task.assignTo === employee.firstName) {
+        employee.tasks = employee.tasks || [];
+        employee.tasks.push(updatedTask);
+        console.log('task created', employee);
+        console.log('task', updatedTask);
       }
-    })
+      return employee;
+    });
 
-// Reset form fields after submission
-    setTaskTitle('')
-    setCategory('')
-    setAssignTo('')
-    setTaskDate('')
-    setTaskDescription('')
-  }
+    // Save updated employee data back to localStorage
+    localStorage.setItem('employees', JSON.stringify(updatedEmployees));
+
+    // Update the state that holds loggedInUserData
+    
+
+    // Reset form fields after submission
+    setTask({
+      taskTitle: '',
+      taskDescription: '',
+      taskDate: '',
+      category: '',
+      assignTo: ''
+    });
+  };
 
   return (
   <div className='p-5 bg-[#1c1c1c] mt-7 rounded'>
@@ -61,26 +71,26 @@ const CreateTask = () => {
       <div className='w-1/2 text-left'>
         <InputField 
           label="Task Title" 
-          value={taskTitle} 
-          onChange={(e) => setTaskTitle(e.target.value)} 
+          value={task.taskTitle} 
+          onChange={(e) => setTask({ ...task, taskTitle: e.target.value })} 
           placeholder="Make a UI design"
         />
         <InputField 
           label="Date" 
           type="date" 
-          value={taskDate} 
-          onChange={(e) => setTaskDate(e.target.value)} 
+          value={task.taskDate} 
+          onChange={(e) => setTask({ ...task, taskDate: e.target.value })} 
         />
         <InputField 
           label="Assign to" 
-          value={assignTo} 
-          onChange={(e) => setAssignTo(e.target.value)} 
+          value={task.assignTo} 
+          onChange={(e) => setTask({ ...task, assignTo: e.target.value })} 
           placeholder="Employee name"
         />
         <InputField 
           label="Category" 
-          value={category} 
-          onChange={(e) => setCategory(e.target.value)} 
+          value={task.category} 
+          onChange={(e) => setTask({ ...task, category: e.target.value })} 
           placeholder="Design, dev, etc."
         />
       </div>
@@ -89,8 +99,8 @@ const CreateTask = () => {
         <h3 className='text-sm text-gray-300 mb-0.5'>Description</h3>
         <textarea 
           name="" id="" cols='30' rows='10' 
-          value={taskDescription}
-          onChange={(e) => setTaskDescription(e.target.value)} 
+          value={task.taskDescription}
+          onChange={(e) => setTask({ ...task, taskDescription: e.target.value })} 
           className='w-full h-44 text-sm py-2 px-4 rounded outline-none bg-transparent border-[1px] border-gray-400'
         />
       </div>

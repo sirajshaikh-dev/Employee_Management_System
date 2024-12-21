@@ -1,14 +1,9 @@
-import { useContext } from "react";
-import { AuthContext } from "../../Context/AuthProvider";
 
 const Header = ({changeUser,loggedInUserData, user }) => {
-  const authData = useContext(AuthContext);
-
-  console.log(authData.employees);
 
   const logOut = () => {
     localStorage.setItem("loggedInUser", "");
-    // window.location.reload()  //In efficient way as it reload the page
+    // window.location.reload()  //Unefficient way as it reload the page
     changeUser(null);
   };
 
