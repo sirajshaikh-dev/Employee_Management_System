@@ -39,27 +39,24 @@ const CreateTask = () => {
 
     setTask(updatedTask);
 
-    // Get employees data from AuthContext
-    const employees = userData
-    console.log('employees Data', employees);
-
-    // Assign task to the specified employee
-    employees.map((employee) => {
+    const updatedEmployees = userData.map((employee) => {
       if (task.assignTo === employee.firstName) {
-        employee.tasks = employee.tasks || [];
-        employee.tasks.push(updatedTask);
-        employee.taskCounts.newTask++;
-        alert('Task created successfully');
-
-        console.log('task created', employee);
-        console.log('Updatedtask', updatedTask);
+        const updatedTasks = [...employee.tasks, updatedTask];
+        return {
+          ...employee,
+          tasks: updatedTasks,
+          taskCounts: {
+            ...employee.taskCounts,
+            newTask: employee.taskCounts.newTask + 1,
+          },
+        };
       }
       return employee;
     });
-    setUserData(employees)
-    console.log('employees Data',employees)
-    // Save updated employee data back to localStorage
-    localStorage.setItem('employees', JSON.stringify(employees));
+    
+    setUserData(updatedEmployees);
+    localStorage.setItem('employees', JSON.stringify(updatedEmployees));
+    console.log('updatedEmployees',updatedEmployees)    
 
 
     // Reset form fields after submission
