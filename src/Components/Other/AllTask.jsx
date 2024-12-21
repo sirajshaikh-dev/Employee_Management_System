@@ -2,8 +2,8 @@ import { useContext } from "react"
 import { AuthContext } from "../../Context/AuthProvider"
 
 const AllTask = () => {
-  const authData = useContext(AuthContext);
-  console.log("authData", authData);
+  const [userData,setUserData] = useContext(AuthContext);
+  console.log("userData", userData);
 
   return (
     <div id="alltask" className="bg-gray-900 p-6 mt-6 rounded-lg shadow-lg">
@@ -16,7 +16,7 @@ const AllTask = () => {
       </div>
 
       <div className="space-y-3">
-        {authData.employees.map((employee) => (
+        {userData.map((employee) => (
           <div
             key={employee.id}
             className="flex justify-between items-center bg-gray-800 text-white py-3 px-5 rounded-lg border border-gray-700 shadow-sm"

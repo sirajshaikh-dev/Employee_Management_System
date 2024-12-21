@@ -1,6 +1,10 @@
-import {  useState } from "react"
+import {  useContext, useState } from "react"
+import { AuthContext } from "../../Context/AuthProvider";
 
 const CreateTask = () => {
+
+  const[userData,setUserData]= useContext(AuthContext)
+  // console.log('UserData',userData)
   const [task, setTask] = useState({
     active: false,
     newTask: true,
@@ -35,25 +39,28 @@ const CreateTask = () => {
 
     setTask(updatedTask);
 
-    // Retrieve existing employee data from localStorage
-    const employees = JSON.parse(localStorage.getItem('employees')) || [];
+    // Get employees data from AuthContext
+    const employees = userData
+    console.log('employees Data', employees);
 
     // Assign task to the specified employee
-    const updatedEmployees = employees.map((employee) => {
+    employees.map((employee) => {
       if (task.assignTo === employee.firstName) {
         employee.tasks = employee.tasks || [];
         employee.tasks.push(updatedTask);
+        employee.taskCounts.newTask++;
+        alert('Task created successfully');
+
         console.log('task created', employee);
-        console.log('task', updatedTask);
+        console.log('Updatedtask', updatedTask);
       }
       return employee;
     });
-
+    setUserData(employees)
+    console.log('employees Data',employees)
     // Save updated employee data back to localStorage
-    localStorage.setItem('employees', JSON.stringify(updatedEmployees));
+    localStorage.setItem('employees', JSON.stringify(employees));
 
-    // Update the state that holds loggedInUserData
-    
 
     // Reset form fields after submission
     setTask({
