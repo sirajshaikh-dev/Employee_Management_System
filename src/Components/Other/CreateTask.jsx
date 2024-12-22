@@ -27,30 +27,22 @@ const CreateTask = () => {
       return;
     }
 
-    // Constructing the task Object
-    const updatedTask = {
-      ...task,
-      taskTitle: task.taskTitle,
-      taskDescription: task.taskDescription,
-      taskDate: task.taskDate,
-      category: task.category,
-      assignTo: task.assignTo
-    };
-
-    setTask(updatedTask);
-
     const updatedEmployees = userData.map((employee) => {
       if (task.assignTo === employee.firstName) {
-        const updatedTasks = [...employee.tasks, updatedTask];
+      //update the tasks and taskcounts immutably
+        const updatedTasks = [...employee.tasks, task];
+        const updatedTaskCounts = { 
+          ...employee.taskCounts, 
+          newTask: employee.taskCounts.newTask + 1 
+        };
+         // Return a new employee object with updated tasks and taskCounts
         return {
           ...employee,
           tasks: updatedTasks,
-          taskCounts: {
-            ...employee.taskCounts,
-            newTask: employee.taskCounts.newTask + 1,
-          },
+          taskCounts: updatedTaskCounts,
         };
       }
+       // Return the employee unchanged if not assigned the task
       return employee;
     });
     
