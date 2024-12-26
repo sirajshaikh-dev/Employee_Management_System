@@ -66,13 +66,10 @@ function App() {
           />
       }
 
-        {!user 
-          ? <Login handleLogin={handleLogin}/> 
-          : user == 'admin' 
-            ? <AdminDashboard /> 
-            : user == 'employee'
-              ? <EmployeeDashboard loggedInUserData={loggedInUserData} />
-              : (null)
+        {!user ? <Login handleLogin={handleLogin}/> 
+          : user == 'admin' ? <AdminDashboard /> 
+          : user == 'employee'? <EmployeeDashboard loggedInUserData={loggedInUserData} />
+          : (null)
             
 
           }
